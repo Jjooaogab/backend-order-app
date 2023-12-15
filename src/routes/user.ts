@@ -19,8 +19,8 @@ export async function userRoutes(app: FastifyInstance) {
 
     const { name, password, email, userImg, role } = bodySchema.parse(req.body)
 
-    const cryptPass = await b.hash(password, SALT_ROUNDS)
-
+    const cryptPass = await b.hash(password, SALT_ROUNDS);
+    
     const user = await prisma.user.create({
       data: {
         name,

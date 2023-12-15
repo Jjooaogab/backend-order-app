@@ -49,7 +49,7 @@ export async function orderRoutes(app: FastifyInstance) {
       }
     })
 
-    return [orderProducts, id]
+    return [orderProducts, 'Id da mesa: ' + id ]
   })
 
   app.post('/order/:id/products', async (req) => {
@@ -57,12 +57,11 @@ export async function orderRoutes(app: FastifyInstance) {
   
     const bodySchema = z.object({
       productId: z.string().uuid(),
-      name: z.string(),
       qntd: z.number().int().min(1),
     })
   
     const { id } = paramsSchema.parse(req.params)
-    const { productId, qntd, name } = bodySchema.parse(req.body)
+    const { productId, qntd } = bodySchema.parse(req.body)
   
     const newOrderProduct = await prisma.orderProduct.create({
       data: {     

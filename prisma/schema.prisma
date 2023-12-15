@@ -3,38 +3,49 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Order {
   id      String         @id @default(uuid())
   number  Int            @unique
-  product OrderProduct[]
   status  String         @default("ABERTO")
+  product OrderProduct[]
 }
 
 model OrderProduct {
   id       String    @id @default(uuid())
-  products Product[]
   qntd     Int       @default(1)
-  Order    Order?    @relation(fields: [orderId], references: [id])
   orderId  String?
+  Order    Order?    @relation(fields: [orderId], references: [id])
+  products Product[]
 }
 
 model Product {
   id             String        @id @default(uuid())
   name           String
   value          Decimal
-  OrderProduct   OrderProduct? @relation(fields: [orderProductId], references: [id])
   orderProductId String?
+  OrderProduct   OrderProduct? @relation(fields: [orderProductId], references: [id])
 }
 
 model User {
-  id       Int     @id @unique @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   name     String
   password String
-  email    String  @unique
+  email    String
   userImg  String?
-  role     String  @default("Cliente")
+  role     String    @default("Cliente")
+  Message  Message[]
+
+  @@unique([id, email])
+}
+
+model Message {
+  id        String @id @unique @default(uuid())
+  content   String
+  user      User   @relation(fields: [userId, userEmail], references: [id, email])
+  userId    Int
+  userEmail String
 }

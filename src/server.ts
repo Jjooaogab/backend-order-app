@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import fastify from "fastify"
 import cors from '@fastify/cors'
-import { orderRoutes, productRoutes, userRoutes } from "./routes"
+import { MessageRoutes, orderRoutes, productRoutes, userRoutes } from "./routes"
 
 const app = fastify() // Criação do servidor, o servidor começa aqui ( Http ).
 
@@ -12,6 +12,7 @@ app.register(cors, {
 app.register(productRoutes)
 app.register(orderRoutes)
 app.register(userRoutes)
+app.register(MessageRoutes)
 
 app.listen({ // Isso aqui serve para fazer o servidor ouvir uma 'URL'
   port: 3333,
