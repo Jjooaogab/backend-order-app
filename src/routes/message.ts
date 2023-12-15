@@ -33,6 +33,22 @@ export async function MessageRoutes(app: FastifyInstance) {
     return message
   })
 
+  app.get('/order/messages/user/:id/view', async (req) => {
+    const { id } = paramsSchema.parse(req.params)
+    const idInt = parseInt(id)
+
+    const message = await prisma.message.findMany({
+      where: {
+        userId: idInt
+      },
+      orderBy: {
+        content: 'desc'
+      }
+    })
+
+    return message
+  })
+
   app.delete('/order/message/delete/:id', async (req) => {
     const { id } = paramsSchema.parse(req.params)
     const idInt = parseInt(id)
