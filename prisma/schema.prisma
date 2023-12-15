@@ -29,3 +29,12 @@ model Product {
   OrderProduct   OrderProduct? @relation(fields: [orderProductId], references: [id])
   orderProductId String?
 }
+
+model User {
+  id       Int     @id @unique @default(autoincrement())
+  name     String
+  password String
+  email    String  @unique
+  userImg  String?
+  role     String  @default("Cliente")
+}
