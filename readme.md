@@ -162,7 +162,7 @@ DELETE /product/1234abcd
 
 Esse projeto é usado pelas seguintes empresas:
 
-- Adega do Galego
+- [@Adega do Galego](https://www.instagram.com/adegadogalego22)
 
 
 
